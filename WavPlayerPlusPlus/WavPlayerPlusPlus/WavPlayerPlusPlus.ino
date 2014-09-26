@@ -31,8 +31,9 @@ void setup()
           audioShield.enable();
           Serial.print(">AudioShieldEnabled \n");
           //audioShield.volume(100);
-          //To get sound :
+          // Setting Master Out Slave In pin.           
           SPI.setMOSI(7);
+          //Setting the serial clock pin. 
           SPI.setSCK(14);
       
           SD.begin(10);
