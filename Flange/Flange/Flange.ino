@@ -16,8 +16,8 @@ const int switchPin = 0;
 boolean currentState = false;
 boolean fxState = false;
 
-//Selecting Mic
-const int myInput = AUDIO_INPUT_MIC;
+//Selecting LINE in MIC input is not that good, it get's distorted quite easily.
+const int myInput = AUDIO_INPUT_LINEIN;
 
 
 AudioInputI2S       audioInput;         // audio shield: mic or line-in
@@ -94,8 +94,11 @@ void FX()
     fxState = true;
     Serial.print("\n Audio Processor Usage(in FX):");
     Serial.print(AudioProcessorUsageMax());
-    
-        
+    Serial.print("\n Memory Usage:");
+    Serial.print(AudioMemoryUsageMax());
+    AudioMemoryUsageMaxReset();
+    AudioProcessorUsageMaxReset();
+          
         
 }
 
