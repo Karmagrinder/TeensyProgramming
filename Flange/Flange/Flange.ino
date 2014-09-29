@@ -7,7 +7,12 @@
 
 // Number of samples in each delay line
 #define FLANGE_DELAY_LENGTH (6*AUDIO_BLOCK_SAMPLES)
+//AUDIO_BLOCK_SAMPLES is defined in AudioStream.h (cores/teensy3), 
+//1 AUDIO_BLOCK_SAMPLE =128 (approx 2.9ms),
+//read more here: https://www.pjrc.com/teensy/td_libs_AudioNewObjects.html
+
 // Allocate the delay lines for left and right channels
+// Refer to effects_info.h for definitions of varios DELAY_LENGTHS
 short l_delayline[FLANGE_DELAY_LENGTH];
 short r_delayline[FLANGE_DELAY_LENGTH];
 
