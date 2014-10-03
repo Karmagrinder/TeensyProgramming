@@ -64,6 +64,8 @@ void setup()
 
 {
     pinMode(switchPin, INPUT);
+   // pinMode(pot1Pin, INPUT);
+    pinMode(pot2Pin, INPUT);
     Serial.begin(9600);
     //while (!Serial) ;
     delay(3000); 
@@ -129,6 +131,10 @@ void bypass()
     fxState = false;
     Serial.print("\n Audio Processor Usage:");
     Serial.print(AudioProcessorUsageMax());
+    Serial.print("\n Memory Usage:");
+    Serial.print(AudioMemoryUsageMax());
+    AudioMemoryUsageMaxReset();
+    AudioProcessorUsageMaxReset();
 }
 
 
