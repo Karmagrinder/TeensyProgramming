@@ -3,7 +3,6 @@
 #include <Wire.h>
 #include <SD.h>
 #include <SPI.h>
-//#include <Bounce.h>
 
 // Number of samples in each delay line
 #define FLANGE_DELAY_LENGTH (6*AUDIO_BLOCK_SAMPLES)
@@ -34,7 +33,11 @@ AudioOutputI2S      audioOutput;        // audio shield: headphones & line-out
 // Create Audio connections between the components
 // Both channels of the audio input go to the flange effect
 AudioConnection c1(audioInput, 0, l_myEffect, 0);
-AudioConnection c2(audioInput, 0, r_myEffect, 0);  // Jack is MONO
+// If the input jack is MONO un-comment the following:
+AudioConnection c2(audioInput, 0, r_myEffect, 0);  
+// If the input jack is STEREO un-comment the following:
+//AudioConnection c2(audioInput, 1, r_myEffect, 0);  
+
 // both channels from the flange effect go to the audio output
 AudioConnection c3(l_myEffect, 0, audioOutput, 0);
 AudioConnection c4(r_myEffect, 0, audioOutput, 1);
@@ -42,17 +45,19 @@ AudioConnection c4(r_myEffect, 0, audioOutput, 1);
 AudioControlSGTL5000 audioShield;
 
 //FlangeResult = sig + sig(s_idx + s_depth*sin(2*pi*s_freq))
+
+// editing the values of s_idx and s_depth doesn't works out that well, yet to figure out this.
 int s_idx = FLANGE_DELAY_LENGTH/4;
-float s_depthFactor;  // this will be updated from potentiometers
 int s_depth = FLANGE_DELAY_LENGTH/4;
+
 //s_freq value is controlled by potentiometers the values 0,0.5,1 will get same value for sine function i.e 0,
 //to get maximum depth effect 0.25 for +Depth and 0.75 for -Depth
 double s_freq = .3; 
 
 //potentiometers 
-const int pot1Pin = 21;
+//const int pot1Pin = 21;
 const int pot2Pin = 20;
-float pot1Val;
+//float pot1Val;
 float pot2Val;
 
 void setup()
@@ -67,7 +72,7 @@ void setup()
     audioShield.inputSelect(myInput);
     audioShield.volume(0.5);
     
-            // Set up the flange effect:
+ // Set up the flange effect:
       // address of delayline
       // total number of samples in the delay line
       // Index (in samples) into the delay line for the added voice
@@ -129,17 +134,15 @@ void bypass()
 
 void potControl()
 {
-  pot1Val = analogRead(pot1Pin);
+  //pot1Val = analogRead(pot1Pin);
   pot2Val = analogRead(pot2Pin);
   
   s_freq = pot2Val/1024;
-  s_depthFactor = pot1Val/1024;
+  //s_depthFactor = pot1Val/100;
   
   Serial.print("\n s_freq:");
   Serial.print(s_freq);
-  Serial.print("    ");
-  Serial.print("s_depthFactor:");
-  Serial.print(s_depthFactor);
+
     
 }
 
@@ -153,12 +156,10 @@ void loop()
         potControl();
         
       }
-
-     
+    
     else 
       {
         bypass();
-
       }
     volumeControl(); 
 }
