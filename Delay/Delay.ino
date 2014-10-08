@@ -55,10 +55,10 @@ many blocks you provided with AudioMemory().
 #include <SPI.h>
 
 // Number of samples in each delay line
-#define CHORUS_DELAY_LENGTH (50*AUDIO_BLOCK_SAMPLES) // 200*2.5 = 500ms 
+#define DELAY_LENGTH (50*AUDIO_BLOCK_SAMPLES) // 200*2.5 = 500ms 
 // Allocate the delay lines for left and right channels
-short l_delayline[CHORUS_DELAY_LENGTH];
-short r_delayline[CHORUS_DELAY_LENGTH];
+short l_delayline[DELAY_LENGTH];
+short r_delayline[DELAY_LENGTH];
 
 // Default is to just pass the audio through. 
 
@@ -66,25 +66,25 @@ short r_delayline[CHORUS_DELAY_LENGTH];
 const int myInput = AUDIO_INPUT_LINEIN;
 
 AudioInputI2S       audioInput;         // audio shield: mic or line-in
-AudioEffectChorus   l_myEffect;
-AudioEffectChorus   r_myEffect;
+AudioEffectDelay   delayFx;
 AudioOutputI2S      audioOutput;        // audio shield: headphones & line-out
-
+AudioMixer4        mixer1;
 // Create Audio connections between the components
-// Both channels of the audio input go to the chorus effect
-AudioConnection c1(audioInput, 0, l_myEffect, 0);
-// If the input jack is MONO un-comment the following:
-AudioConnection c2(audioInput, 0, r_myEffect, 0);  
-// If the input jack is STEREO un-comment the following:
-//AudioConnection c2(audioInput, 1, r_myEffect, 0);
-// both channels chorus effects go to the audio output
-AudioConnection c3(l_myEffect, 0, audioOutput, 0);
-AudioConnection c4(r_myEffect, 0, audioOutput, 1);
+AudioConnection c1(audioInput, delayFx);
+//Direct signal
+AudioConnection c2(audioInput, audioOutput);
+//FX signal
+AudioConnection c3(delayFx, 0, mixer1, 0);
+AudioConnection c4(delayFx, 1, mixer1, 1);
+
+//mixer output
+AudioConnection c5(mixer1, 0, audioOutput, 0);
+AudioConnection c6(mixer1, 1, audioOutput, 1);
 
 AudioControlSGTL5000 audioShield;
 
 // number of "voices" in the chorus which INCLUDES the original voice
-int n_chorus = 2;
+float delayParam = 0;
 
 //Potentiometers 
 //const int pot1Pin = 21;
@@ -101,42 +101,24 @@ boolean fxState = false;
 void setup() {
   
   Serial.begin(9600);
-  while (!Serial) ;
+  while(!Serial);
   delay(3000);
-
+  Serial.print("\n In setup \n");
   pinMode(switchPin, INPUT);
   // pinMode(pot1Pin, INPUT);
   pinMode(pot2Pin, INPUT);
 
   // Maximum memory usage was reported as 4
   // Proc = 9 (9),  Mem = 4 (4)
-  AudioMemory(6);
+  AudioMemory(120);
 
   audioShield.enable();
   audioShield.inputSelect(myInput);
   audioShield.volume(0.65);
   
-  // Initialize the effect - left channel
-  // address of delayline
-  // total number of samples in the delay line
-  // number of voices in the chorus INCLUDING the original voice
-  if(!l_myEffect.begin(l_delayline,CHORUS_DELAY_LENGTH,n_chorus)) {
-    Serial.println("AudioEffectChorus - left channel begin failed");
-    while(1);
-  }
-
-  // Initialize the effect - right channel
-  // address of delayline
-  // total number of samples in the delay line
-  // number of voices in the chorus INCLUDING the original voice
-  if(!r_myEffect.begin(r_delayline,CHORUS_DELAY_LENGTH,n_chorus)) {
-    Serial.println("AudioEffectChorus - left channel begin failed");
-    while(1);
-  }
-  // Initially the effect is off. It is switched on when the
-  // PASSTHRU button is pushed.
-  l_myEffect.voices(0);
-  r_myEffect.voices(0);
+  // Initialize the effect
+  delayFx.delay(0, 110);
+  delayFx.delay(1, 220);  
 
   Serial.println("setup done");
   AudioProcessorUsageMaxReset();
@@ -165,11 +147,11 @@ void potControl()
   //pot1Val = analogRead(pot1Pin);
   pot2Val = analogRead(pot2Pin);
   
-  n_chorus = pot2Val/300;
+  delayParam = pot2Val/2;
   //s_depthFactor = pot1Val/100;
   
-  Serial.print("\n n_chorus:");
-  Serial.print(n_chorus);
+  Serial.print("\n delayParam:");
+  Serial.print(delayParam);
 
     
 }
@@ -199,8 +181,9 @@ void loop()
 void FX()
   {
     Serial.print("\n FX active ! \n");
-    l_myEffect.voices(n_chorus);
-    r_myEffect.voices(n_chorus);
+      delayFx.delay(0, delayParam);
+      delayFx.delay(1, delayParam+100);
+    
     fxState = true;
     Serial.print("\n Audio Processor Usage(in FX):");
     Serial.print(AudioProcessorUsageMax());
@@ -214,8 +197,8 @@ void FX()
 void bypass()
   {
     Serial.print("\n Bypass Mode Active ! \n");
-    l_myEffect.voices(0);
-    r_myEffect.voices(0);
+    delayFx.delay(0, 0);
+    delayFx.delay(0, 0);
     fxState = false;
     Serial.print("\n Audio Processor Usage:");
     Serial.print(AudioProcessorUsageMax());
