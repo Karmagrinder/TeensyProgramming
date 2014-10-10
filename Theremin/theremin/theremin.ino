@@ -63,7 +63,8 @@ float frequencyCalculator()
   {
     // Highest sensor reading is about 123, sending out notes from mid range frequency
     sensorVal = sensorReading();
-      
+    Serial.print("\n Sensor Reading: ");
+    Serial.print(sensorVal);  
             if(sensorVal<=4)
            {
             return 246.94; // B
@@ -123,5 +124,7 @@ void soundGen()
 void loop()
 {
  soundGen();
- Serial.println(wavFrequency);
+ Serial.print("  Frequency: ");
+ Serial.print(wavFrequency);
+ delay(1000);
  }
