@@ -112,32 +112,32 @@ void alterEnvelope()
   		envelope1.sustain(0.667);
   		envelope1.release(30.0);
                 break;
-             case 1:
+           case 1:
             //envelope1.state = 0;
-		envelope1.delay(20.0);  // default values...
-		envelope1.attack(5.0);
-		envelope1.hold(1);
-		envelope1.decay(20.0);
-		envelope1.sustain(0.800);
-		envelope1.release(30.0);
+		//envelope1.delay(20.0);  // default values...
+		envelope1.attack(9.2);
+		envelope1.hold(2.1);
+		envelope1.decay(31.4);
+		envelope1.sustain(0.6);
+		envelope1.release(84.6);
                 break;
             case 2:
                   //envelope1.state = 0;
   		envelope1.delay(30.0);  // default values...
-  		envelope1.attack(10);
-  		envelope1.hold(0.5);
-  		envelope1.decay(30.0);
-  		envelope1.sustain(1);
-  		envelope1.release(50.0);
+		envelope1.attack(9.2);
+		envelope1.hold(2.1);
+		envelope1.decay(31.4);
+		envelope1.sustain(0.6);
+		envelope1.release(84.6);
                 break;
              case 3:
             //envelope1.state = 0;
 		envelope1.delay(50);  // default values...
-		envelope1.attack(15);
+		envelope1.attack(50);
 		envelope1.hold(1);
-		envelope1.decay(40.0);
+		envelope1.decay(50);
 		envelope1.sustain(1);
-		envelope1.release(40.0);
+		envelope1.release(250);
                 break;        
           }            
     }
