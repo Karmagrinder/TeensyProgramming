@@ -7,10 +7,10 @@
 //Ultrasonic sensor HC-S04 stuff
 #define trigPin 0
 #define echoPin 1
-#define trigPin1 2
-#define echoPin1 3
+#define photoResistorPin 20
 #define led 13
 #define potPin 21
+#define volumePin 15
 long distance, duration, distance1, duration1;
 
 
@@ -44,6 +44,9 @@ void setup() {
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
+  pinMode(photoResistorPin, INPUT);
+  pinMode(potPin, INPUT);
+  pinMode(volumePin, INPUT);
   pinMode(led, OUTPUT);
    
   AudioMemory(20);
@@ -71,17 +74,6 @@ long sensorReading()
 
   }
   
- long sensor1Reading()
-  {
-    digitalWrite(trigPin1, LOW);  // Added this line
-    delayMicroseconds(2); // Added this line
-    digitalWrite(trigPin1, HIGH);
-    delayMicroseconds(10); // Added this line
-    digitalWrite(trigPin1, LOW);
-    duration1 = pulseIn(echoPin1, HIGH);
-    distance1 = duration/58.2;
-    return distance1;
-  } 
 //>>>>>>>>>>>>>>>>>>>>> Key Mapping <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 int keyMap()
     {
@@ -118,6 +110,19 @@ float frequencyCalculator()
     return noteFrequency;  
    
    }
+   
+//>>>>>>>>>>>>>>>>>>>>>>>Amplitude<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+float amplitudeGen()
+{
+  float photoResistorVal = analogRead(photoResistorPin);
+  amplitudeVal = photoResistorVal/1024;
+       Serial.print("  photoResistorVal:");
+       Serial.print(photoResistorVal);
+       Serial.print("  Amplitude:");
+       Serial.print(amplitudeVal);
+       return amplitudeVal;
+}
+
 // >>>>>>>>>>>>>>>>>>>>>> Envelope altering >>>>>>>>>>>>>>>>>>>>>>>>>
 void alterEnvelope()
     { 
@@ -166,6 +171,7 @@ void alterEnvelope()
                 break;        
           
       }
+
        Serial.print("  Envelope:");
        Serial.print(envelopeSelect);      
       
@@ -177,7 +183,7 @@ void soundGen()
   {
     keyMap();
     noteFrequency = frequencyCalculator();
-    //noteAmplitude = amplitudeMapping();
+    noteAmplitude = amplitudeGen();
     noteAmplitude = 0.5;
     alterEnvelope();
     if (noteFrequency > 27.4)
