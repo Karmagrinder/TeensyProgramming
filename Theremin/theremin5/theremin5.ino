@@ -70,7 +70,7 @@ void setup() {
   delay1.disable(5);
   delay1.disable(6);
   delay1.disable(7);  
-  AudioMemory(20);
+  AudioMemory(30);
   sgtl5000_1.enable();
   sgtl5000_1.volume(0.5);
 }
