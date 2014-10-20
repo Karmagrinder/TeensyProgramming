@@ -1,0 +1,748 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+<netlist date="Mon Oct 20 21:48:04 2014" sketch="Teensy-Theremin5 -3.fzz">
+ <net>
+  <connector id="connector0" name="GND">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector0" name="GND">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector16" name="GND">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector16" name="GND">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector0" name="pin1">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="pin1">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R2" id="854120250" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R2" id="854120252" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U1" id="854121090" title="POT"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U1" id="854121092" title="POT"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via18" id="854322660" title="Via"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via18" id="854322661" title="Via"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U2" id="854122402" title="POT"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U2" id="854122400" title="POT"/>
+  </connector>
+  <connector id="connector11" name="GND">
+   <part label="HC-SR04" id="854233190" title=""/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U4" id="854165832" title="POT"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U4" id="854165830" title="POT"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R7" id="854213292" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R7" id="854213290" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R10" id="854213832" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R10" id="854213830" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R8" id="854213472" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R8" id="854213470" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R9" id="854213652" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R9" id="854213650" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U3" id="854165810" title="POT"/>
+  </connector>
+  <connector id="connector0" name="S">
+   <part label="U3" id="854165812" title="POT"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector2" name="E">
+   <part label="U1" id="854121090" title="POT"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U1" id="854121092" title="POT"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U2" id="854122400" title="POT"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U2" id="854122402" title="POT"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S2" id="854146862" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S2" id="854146860" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U3" id="854165810" title="POT"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U3" id="854165812" title="POT"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U4" id="854165832" title="POT"/>
+  </connector>
+  <connector id="connector2" name="E">
+   <part label="U4" id="854165830" title="POT"/>
+  </connector>
+  <connector id="connector1" name="pin 1">
+   <part label="LDR" id="854120072" title="Photocell (LDR)"/>
+  </connector>
+  <connector id="connector1" name="pin 1">
+   <part label="LDR" id="854120070" title="Photocell (LDR)"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S4" id="854149282" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S4" id="854149280" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S5" id="854149310" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S5" id="854149312" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S3" id="854148482" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector1" name="leg1">
+   <part label="S3" id="854148480" title="Round Pushbutton"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector6" name="pin7">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector6" name="pin7">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via20" id="854344310" title="Via"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via20" id="854344311" title="Via"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R2" id="854120252" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector1" name="Pin 1">
+   <part label="R2" id="854120250" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via11" id="854310981" title="Via"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via11" id="854310980" title="Via"/>
+  </connector>
+  <connector id="connector0" name="pin 0">
+   <part label="LDR" id="854120070" title="Photocell (LDR)"/>
+  </connector>
+  <connector id="connector0" name="pin 0">
+   <part label="LDR" id="854120072" title="Photocell (LDR)"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via19" id="854344250" title="Via"/>
+  </connector>
+  <connector id="connector0" name="via">
+   <part label="Via19" id="854344251" title="Via"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="pin1">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="pin1">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector8" name="VCC">
+   <part label="HC-SR04" id="854233190" title=""/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="A">
+   <part label="U1" id="854121092" title="POT"/>
+  </connector>
+  <connector id="connector1" name="A">
+   <part label="U1" id="854121090" title="POT"/>
+  </connector>
+  <connector id="connector5" name="pin6">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector5" name="pin6">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="pin2">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector1" name="pin2">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector9" name="Trig">
+   <part label="HC-SR04" id="854233190" title=""/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector2" name="pin3">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector2" name="pin3">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector10" name="Echo">
+   <part label="HC-SR04" id="854233190" title=""/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector11" name="pin12">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector11" name="pin12">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector1" name="A">
+   <part label="U4" id="854165832" title="POT"/>
+  </connector>
+  <connector id="connector1" name="A">
+   <part label="U4" id="854165830" title="POT"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector0" name="Pin 0">
+   <part label="R9" id="854213652" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R9" id="854213650" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S4" id="854149282" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S4" id="854149280" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector5" name="pin6">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector5" name="pin6">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector6" name="pin7">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector6" name="pin7">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R10" id="854213832" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R10" id="854213830" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S5" id="854149312" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S5" id="854149310" title="Round Pushbutton"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="A">
+   <part label="U3" id="854165812" title="POT"/>
+  </connector>
+  <connector id="connector1" name="A">
+   <part label="U3" id="854165810" title="POT"/>
+  </connector>
+  <connector id="connector10" name="pin11">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector10" name="pin11">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="A">
+   <part label="U2" id="854122402" title="POT"/>
+  </connector>
+  <connector id="connector1" name="A">
+   <part label="U2" id="854122400" title="POT"/>
+  </connector>
+  <connector id="connector9" name="pin10">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector9" name="pin10">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector4" name="pin5">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector4" name="pin5">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R8" id="854213472" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R8" id="854213470" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S3" id="854148482" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S3" id="854148480" title="Round Pushbutton"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="pin4">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector3" name="pin4">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R7" id="854213292" title="10k Ω Resistor"/>
+  </connector>
+  <connector id="connector0" name="Pin 0">
+   <part label="R7" id="854213290" title="10kΩ Resistor"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S2" id="854146862" title="Round Pushbutton"/>
+  </connector>
+  <connector id="connector0" name="leg0">
+   <part label="S2" id="854146860" title="Round Pushbutton"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector9" name="D8">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector9" name="D8">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector8" name="D7">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector8" name="D7">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector7" name="D6">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector7" name="D6">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector6" name="D5">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector6" name="D5">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector19" name="D13">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector19" name="D13">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector5" name="D4">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector5" name="D4">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector18" name="A14/DAC">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector18" name="A14/DAC">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector4" name="D3">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector4" name="D3">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector17" name="Program">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector17" name="Program">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="D2">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector3" name="D2">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector2" name="D1">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector2" name="D1">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector15" name="3V3">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector15" name="3V3">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="D0">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector1" name="D0">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector14" name="VBat">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector14" name="VBat">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector13" name="D12">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector13" name="D12">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector29" name="A9/D23">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector29" name="A9/D23">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="D11">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector12" name="D11">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector28" name="A8/D22">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector28" name="A8/D22">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector27" name="A7/D21">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector27" name="A7/D21">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector11" name="D10">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector11" name="D10">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector26" name="A6/D20">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector26" name="A6/D20">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector10" name="D9">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector10" name="D9">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector25" name="A5/D19">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector25" name="A5/D19">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector24" name="A4/D18">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector24" name="A4/D18">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector23" name="A3/D17">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector23" name="A3/D17">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector22" name="A2/D16">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector22" name="A2/D16">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector21" name="A1/D15">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector21" name="A1/D15">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector20" name="A0/D14">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector20" name="A0/D14">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector36" name="VUSB">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector36" name="VUSB">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector35" name="AREF">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector35" name="AREF">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector34" name="A10">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector34" name="A10">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector33" name="A11">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector33" name="A11">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector32" name="Vin">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector32" name="Vin">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector31" name="AGND">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector31" name="AGND">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector30" name="3V3">
+   <part label="Teensy 3.1" id="854336670" title="Teensy 3.1"/>
+  </connector>
+  <connector id="connector30" name="3V3">
+   <part label="Teensy 3.1" id="854336672" title="Teensy 3.1"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector9" name="pin10">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector9" name="pin10">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector8" name="pin9">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector8" name="pin9">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector7" name="pin8">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector7" name="pin8">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector13" name="pin14">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector13" name="pin14">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="pin13">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector12" name="pin13">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector11" name="pin12">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector11" name="pin12">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector10" name="pin11">
+   <part label="J2" id="854330550" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector10" name="pin11">
+   <part label="J2" id="854330552" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector8" name="pin9">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector8" name="pin9">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector7" name="pin8">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector7" name="pin8">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector13" name="pin14">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector13" name="pin14">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector4" name="pin5">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector4" name="pin5">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector12" name="pin13">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector12" name="pin13">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector3" name="pin4">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector3" name="pin4">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+ <net>
+  <connector id="connector1" name="pin2">
+   <part label="J1" id="854329950" title="Generic female header - 14 pins"/>
+  </connector>
+  <connector id="connector1" name="pin2">
+   <part label="J1" id="854329952" title="Generic female header - 14 pins"/>
+  </connector>
+ </net>
+</netlist>

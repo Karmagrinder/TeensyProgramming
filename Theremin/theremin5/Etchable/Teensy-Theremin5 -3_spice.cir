@@ -1,0 +1,10 @@
+Teensy-Theremin5 -3
+R9 9 0 10k
+R7 11 0 10k
+R10 7 0 10k
+R2 0 8 10k
+R8 10 0 10k
+
+.TRAN 1ms 100ms
+* .AC DEC 100 100 1MEG
+.END
