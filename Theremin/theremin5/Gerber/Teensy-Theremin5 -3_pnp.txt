@@ -1,0 +1,43 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=Teensy-Theremin5 -3
+*Date=13:43:13
+*CreatedBy=Fritzing 0.9.0b.06.11.da4e
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;THT;10.3837;-37.217;0;Bottom;HC-SR04
+2;;;45.3837;-5.40691;0;Bottom;Hole6
+3;;pot_mammoth;90.525;-76.0769;90;Bottom;U1
+4;;;22.8945;-6.3181;0;Top;TXT1
+5;;pot_mammoth;90.525;-55.757;90;Bottom;U2
+6;;;52.0537;-17.307;0;Bottom;S4
+7;;;65.1936;-17.4069;0;Bottom;S5
+8;;pot_mammoth;90.525;-37.977;90;Bottom;U3
+9;;;19.0337;-17.307;0;Bottom;S2
+10;10k;THT;10.3837;-75.327;90;Bottom;R2
+11;;THT;40.1235;-53.9775;0;Bottom;J2
+12;;;21.4058;-78.3899;0;Bottom;Via19
+13;;;36.8137;-17.307;0;Bottom;S3
+14;10k;THT;60.9437;-24.927;-90;Bottom;R10
+15;;THT;10.3837;-61.597;90;Bottom;LDR
+16;;;5.38365;-85.407;0;Bottom;Hole3
+17;;;5.38365;-5.40691;0;Bottom;Hole4
+18;;;45.3837;-85.407;0;Bottom;Hole5
+19;;pot_mammoth;90.525;-15.117;90;Bottom;U4
+20;;THT;55.3997;-54.0014;0;Bottom;J1
+21;;;84.3878;-72.4232;0;Bottom;Via18
+22;;;49.431;-78.4524;0;Bottom;Via20
+23;10k;THT;15.2237;-24.927;-90;Bottom;R7
+24;;;21.4058;-78.3899;0;Bottom;Via11
+25;10k;THT;48.2437;-24.927;-90;Bottom;R9
+26;;;85.3837;-5.40691;0;Bottom;Hole1
+27;;;85.3837;-85.407;0;Bottom;Hole2
+28;10k;THT;33.0037;-24.927;-90;Bottom;R8
