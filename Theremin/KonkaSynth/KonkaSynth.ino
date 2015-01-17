@@ -32,7 +32,7 @@ AudioConnection          patchCord4(triangle1, 0, mixer1, 3);
 AudioConnection          patchCord5(mixer1, envelope1);
 AudioConnection          patchCord6(envelope1, delay1);
 AudioConnection          patchCord7(delay1, 0, i2s1, 0);
-AudioConnection          patchCord8(delay1, 1, i2s1, 1);
+AudioConnection          patchCord8(delay1, 0, i2s1, 1); //Delay is mono to save processing
 // GUItool: end automatically generated code
 
 float noteFrequency;
@@ -64,6 +64,8 @@ void setup() {
   square1.begin(0, noteFrequency, WAVEFORM_SQUARE);
   triangle1.begin(0, noteFrequency, WAVEFORM_TRIANGLE);
   //disabling delay on unused channels
+  delay1.disable(0);
+  delay1.disable(1); // delay is off on restart. 
   delay1.disable(2);
   delay1.disable(3);
   delay1.disable(4);
@@ -262,8 +264,16 @@ void delayHandler()
     {
       int potVal2 = analogRead(FXPotPin);
          FXVal = potVal2*0.28;  // If the FX value goes over 300/ or ~290 weird things start to happen, so let's keep it low.
-         delay1.delay(0, FXVal);
-         delay1.delay(1, FXVal);
+         if(FXVal>1)
+         {  
+           delay1.enable(0);
+           if(FXVal>140)
+             {
+               FXVal = 140; // Restricting the delay to some sane value, to prevent crash.
+             }
+           delay1.delay(0, FXVal);
+          
+         }
     }
  
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> generating the sound<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
