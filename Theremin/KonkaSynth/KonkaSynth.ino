@@ -264,9 +264,10 @@ void delayHandler()
     {
       int potVal2 = analogRead(FXPotPin);
          FXVal = potVal2*0.28;  // If the FX value goes over 300/ or ~290 weird things start to happen, so let's keep it low.
+         delay(20);
          if(FXVal>1)
          {  
-           delay1.enable(0);
+           
            if(FXVal>140)
              {
                FXVal = 140; // Restricting the delay to some sane value, to prevent crash.
