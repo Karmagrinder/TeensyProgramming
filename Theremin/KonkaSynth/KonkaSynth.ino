@@ -49,7 +49,7 @@ float FXVal;
 
 //>>>>>>>>>>>>>>>>>>>>>>>SETUP<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void setup() {
-  Serial.begin (9600);
+  //Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
   pinMode(led, OUTPUT);
@@ -171,7 +171,7 @@ float amplitudeMapping()
     {  
        double z;     
        z = analogRead(photoResistorPin);
-       amplitudeVal = z/1000;           
+       amplitudeVal = z/300;           
       return amplitudeVal;
     }
   
@@ -318,11 +318,12 @@ void loop()
   if(millis() - last_time >= 500) {
       if(key==0)
     {
-      Serial.println("\nNot active \n");
+      //Serial.println("\nNot active \n");
       
     }
     
   else {  
+   /*
     Serial.print("\n WaveForm: ");
     Serial.print(currentWaveForm);
     Serial.print("  Key: ");
@@ -338,7 +339,7 @@ void loop()
     Serial.print("  Delay:");
     Serial.print(FXVal);
     Serial.print("\n");
-    
+    */
   }
   last_time = millis();
  }
