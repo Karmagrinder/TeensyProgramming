@@ -3,6 +3,7 @@
 #include <SPI.h>
 #include <SD.h>
 #include <math.h>
+#include <stdio.h>
 
 //Pins
 #define trigPin 0 // For UltrasonicSensor HC-S04
@@ -46,6 +47,7 @@ int envelopeSelect;
 int currentWaveForm;
 int key;
 float FXVal;
+bool isPrintEnabled;
 
 enum waveforms
   {
@@ -84,6 +86,8 @@ void setup()
     AudioMemory(30);
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
+
+    isPrintEnabled = false;
   }
 //>>>>>>>>>>>>>> Reading the ultra sonic sensor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 long sensorReading()
@@ -289,37 +293,41 @@ void volumeControl()
 unsigned long last_time = millis();
 
 void loop()
-{
- volumeControl(); 
- soundGen();
-  if(millis() - last_time >= 500) {
-      if(key==0)
     {
-      //Serial.println("\nNot active \n");
-      
+      volumeControl(); 
+      soundGen();
+      if (isPrintEnabled)
+      {
+        if(millis() - last_time >= 500) {
+        if(key==0)
+          {
+            Serial.println("\nNot active \n");
+            
+          }
+        
+        else 
+          {        
+            Serial.print("\nWaveForm:");
+            Serial.print(currentWaveForm);
+            Serial.print("  Key: ");
+            Serial.print(key); 
+            Serial.print("  Envelope:");
+            Serial.print(envelopeSelect);
+            Serial.print("  amplitudeVal: ");
+            Serial.print(amplitudeVal);
+            Serial.print("  Frequency: ");
+            Serial.print(noteFrequency);
+            Serial.print("  Current Volume:");
+            Serial.print(noteFrequency);
+            Serial.print("  Delay:");
+            Serial.print(FXVal);
+            Serial.print("\n");
+            
+          }
+        last_time = millis();
+      }
+      delay(5);
     }
-    
-  else {  
-   
-    Serial.print("\n WaveForm: ");
-    Serial.print(currentWaveForm);
-    Serial.print("  Key: ");
-    Serial.print(key); 
-    Serial.print("  Envelope:");
-    Serial.print(envelopeSelect);
-    Serial.print("  amplitudeVal: ");
-    Serial.print(amplitudeVal);
-    Serial.print("  Frequency: ");
-    Serial.print(noteFrequency);
-    Serial.print("  Current Volume:");
-    Serial.print(noteFrequency);
-    Serial.print("  Delay:");
-    Serial.print(FXVal);
-    Serial.print("\n");
-    
-  }
-  last_time = millis();
- }
  
 
 
