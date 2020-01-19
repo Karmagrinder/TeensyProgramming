@@ -197,7 +197,7 @@ float frequencyCalculator()
     {
       // formula taken from : http://en.wikipedia.org/wiki/Piano_key_frequencies
       double x = key;
-      double y= pow(2, ((x-49)/12)); // pow() takes only double as variables
+      double y= pow(2, ((float)(x-49)/12)); // pow() takes only double as variables
       //noteFrequency = (2^((key-49)/12))*440;
       noteFrequency = y*440;
     }
@@ -225,60 +225,52 @@ float amplitudeMapping()
     }
   
 //>>>>>>>>>>>>>>>>>>>>>>> WaveForm handling >>>>>>>>>>>>>>>>>>>>>>>>>>
+void setMixerLevelsToNull()
+  {
+      mixer1.gain(0, 0);
+      mixer1.gain(1, 0);
+      mixer1.gain(2, 0);
+      mixer1.gain(3, 0);
+    }
+
+ void setAmplitudesToNull()
+ {
+    // reset amplitudes
+      sine1.amplitude(0);
+      saw1.amplitude(0);
+      square1.amplitude(0);
+      triangle1.amplitude(0);
+  }
+
+  void setFrequenciesToNull()
+  {
+      // reset frequency
+      sine1.frequency(0);
+      saw1.frequency(0);
+      square1.frequency(0);
+      triangle1.frequency(0);
+    }
+    
+  void setNoteAndFrequencies()
+  {
+      sine1.amplitude(noteAmplitude);
+      sine1.frequency(noteFrequency);
+      saw1.amplitude(noteAmplitude);
+      saw1.frequency(noteFrequency);
+      square1.amplitude(noteAmplitude);
+      square1.frequency(noteFrequency);
+      triangle1.amplitude(noteAmplitude);
+      triangle1.frequency(noteFrequency); 
+    }
 
 void setWaveFormAmplitube(int selectedWaveForm)
   {
-
+    setMixerLevelsToNull();
+    setAmplitudesToNull();
+    setFrequenciesToNull();
+    setNoteAndFrequencies();
     float level = 1.0;
-
-    // reset mixer1
-    mixer1.gain(0, 0);
-    mixer1.gain(1, 0);
-    mixer1.gain(2, 0);
-    mixer1.gain(3, 0);
-
-    // set waveform active on mixer
     mixer1.gain(selectedWaveForm, level);
-
-    // reset amplitudes
-    sine1.amplitude(0);
-    saw1.amplitude(0);
-    square1.amplitude(0);
-    triangle1.amplitude(0);
-
-    // reset frequency
-    sine1.frequency(0);
-    saw1.frequency(0);
-    square1.frequency(0);
-    triangle1.frequency(0);
-
-
-    switch (selectedWaveForm)
-    {
-      case 0:
-            sine1.amplitude(noteAmplitude);
-            sine1.frequency(noteFrequency);
-          break;
-
-      case 1:
-            saw1.amplitude(noteAmplitude);
-            saw1.frequency(noteFrequency);
-          break;
-
-      case 2:
-            square1.amplitude(noteAmplitude);
-            square1.frequency(noteFrequency);
-
-          break;
-
-      case 3:
-            triangle1.amplitude(noteAmplitude);
-            triangle1.frequency(noteFrequency);
-          break;
-      
-      default:      
-        break;
-    }
   }
 
 void waveFormHandling()
@@ -316,7 +308,7 @@ void soundGen()
     if (noteFrequency > 27.4)
     {     
       envelope1.noteOn();
-      delay(5);
+      delay(20);
       envelope1.noteOff();
       digitalWrite(led,HIGH);
     }
@@ -416,22 +408,22 @@ void mapPotsToEnvelope()
     
     if(isPot1Changed)
     {
-      attackVal = analogRead(pot1)/100;
+      attackVal = (float)analogRead(pot1)/100;
     }
 
     if(isPot2Changed)
     {
-      decayVal = analogRead(pot1)/100;
+      decayVal = (float)analogRead(pot1)/100;
     }
 
     if(isPot3Changed)
     {
-      sustainVal = analogRead(pot1)/100;
+      sustainVal = (float)analogRead(pot1)/100;
     }
 
     if(isPot4Changed)
     {
-      releaseVal = analogRead(pot1)/100;
+      releaseVal = (float)analogRead(pot1)/100;
     }
     
     float defaultDelayVal = 1;
@@ -445,28 +437,32 @@ void mapPotsToWaveformMixer()
   {
     if(isPot1Changed)
     {
-      sineLevel = analogRead(pot1)/1023;
+      sineLevel = (float)analogRead(pot1)/1024;
     }
 
     if(isPot2Changed)
     {
-      sawLevel = analogRead(pot2)/1023;
+      sawLevel = (float)analogRead(pot2)/1024;
     }
 
     if(isPot3Changed)
     {
-      squareLevel = analogRead(pot3)/1023;
+      squareLevel = (float)analogRead(pot3)/1024;
     }
 
     if(isPot4Changed)
     {
-      triangleLevel = analogRead(pot4)/1023;
+      triangleLevel = (float)analogRead(pot4)/1024;
     }
 
+    setAmplitudesToNull();
+    setFrequenciesToNull();
+    setNoteAndFrequencies();   
+    
     mixer1.gain(0, sineLevel);
     mixer1.gain(1, sawLevel);
     mixer1.gain(2, squareLevel);
-    mixer1.gain(3, triangleLevel);
+    mixer1.gain(3, triangleLevel);    
             
   }
 
@@ -493,22 +489,29 @@ void loop()
       
       else 
         {        
-          Serial.print("\nWaveForm:");
-          Serial.print(currentWaveForm);
-          Serial.print("  Key: ");
-          Serial.print(key); 
-          Serial.print("  Envelope:");
-          Serial.print(envelopeSelect);
-          Serial.print("  amplitudeVal: ");
-          Serial.print(amplitudeVal);
-          Serial.print("  Frequency: ");
-          Serial.print(noteFrequency);
-          Serial.print("  Current Volume:");
-          Serial.print(noteFrequency);
-          Serial.print("  Delay:");
-          Serial.print(FXVal);
+          // Serial.print("\nWaveForm:");
+          // Serial.print(currentWaveForm);
+          // Serial.print("  Key: ");
+          // Serial.print(key); 
+          // Serial.print("  Envelope:");
+          // Serial.print(envelopeSelect);
+          // Serial.print("  amplitudeVal: ");
+          // Serial.print(amplitudeVal);
+          // Serial.print("  Frequency: ");
+          // Serial.print(noteFrequency);
+          // Serial.print("  Current Volume:");
+          // Serial.print(noteFrequency);
+          // Serial.print("  Delay:");
+          // Serial.print(FXVal);
           Serial.print("\n");
-          
+          Serial.print("SineLevel:");
+          Serial.print(sineLevel);
+          Serial.print(" SawLevel:");
+          Serial.print(sawLevel);
+          Serial.print("Square:");
+          Serial.print(squareLevel);
+          Serial.print(" Triangle:");
+          Serial.print(triangleLevel);                    
         }
       last_time = millis();
     }
