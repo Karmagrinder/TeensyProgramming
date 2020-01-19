@@ -169,7 +169,7 @@ long sensorReading()
     delayMicroseconds(10); // Added this line
     digitalWrite(trigPin, LOW);
     duration = pulseIn(echoPin, HIGH);
-    distance = duration/58.2;
+    distance = (float)duration/58.2;
     return distance;
   }
 //>>>>>>>>>>>>>>>>>>>>> Key Mapping <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -220,7 +220,7 @@ float amplitudeMapping()
     {  
        double z;     
        z = analogRead(photoResistorPin);
-       amplitudeVal = z/300;           
+       amplitudeVal = (float)z/300;           
       return amplitudeVal;
     }
   
@@ -263,7 +263,7 @@ void setMixerLevelsToNull()
       triangle1.frequency(noteFrequency); 
     }
 
-void setWaveFormAmplitube(int selectedWaveForm)
+void setWaveFormAmplitude(int selectedWaveForm)
   {
     setMixerLevelsToNull();
     setAmplitudesToNull();
@@ -277,7 +277,7 @@ void waveFormHandling()
   {
     int potVal1=analogRead(waveformPotPin);
     int waveFormSelect = potVal1/256;
-    setWaveFormAmplitube(waveFormSelect);
+    setWaveFormAmplitude(waveFormSelect);
     currentWaveForm = waveFormSelect;
   }
 //>>>>>>>>>>>>>>>>>>>>Delay<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -321,11 +321,12 @@ void soundGen()
   }
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Volume Control <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void volumeControl()
-    {   vol = analogRead(volumePin);
-        vol = vol/1048;
-        sgtl5000_1.volume(vol);
-        
-     }
+    {   
+      vol = analogRead(volumePin);
+      vol = (float)vol/1024;
+      sgtl5000_1.volume(vol);
+    }
+
 // DEVICE MODE 
 void handleDeviceMode()
   {
@@ -374,7 +375,7 @@ void isPotStateChanged()
 
     if (pot3LastVal != analogRead(pot3))
     {
-      isPot1Changed = true;
+      isPot3Changed = true;
     }
     else
     {
@@ -387,7 +388,7 @@ void isPotStateChanged()
     }
     else
     {
-      isPot1Changed = false;
+      isPot4Changed = false;
     }
   }
 
@@ -400,8 +401,6 @@ void savePotStates()
     pot4LastVal = analogRead(pot4);
   }
 
-
-
 // Envelope Mode
 void mapPotsToEnvelope()
   {
@@ -413,17 +412,17 @@ void mapPotsToEnvelope()
 
     if(isPot2Changed)
     {
-      decayVal = (float)analogRead(pot1)/100;
+      decayVal = (float)analogRead(pot2)/50;
     }
 
     if(isPot3Changed)
     {
-      sustainVal = (float)analogRead(pot1)/100;
+      sustainVal = (float)analogRead(pot3)/50;
     }
 
     if(isPot4Changed)
     {
-      releaseVal = (float)analogRead(pot1)/100;
+      releaseVal = (float)analogRead(pot4)/50;
     }
     
     float defaultDelayVal = 1;
@@ -503,15 +502,24 @@ void loop()
           // Serial.print(noteFrequency);
           // Serial.print("  Delay:");
           // Serial.print(FXVal);
+           Serial.print("\n");
+           Serial.print("SineLevel:");
+           Serial.print(sineLevel);
+           Serial.print(" SawLevel:");
+           Serial.print(sawLevel);
+           Serial.print("Square:");
+           Serial.print(squareLevel);
+           Serial.print(" Triangle:");
+           Serial.print(triangleLevel);
           Serial.print("\n");
-          Serial.print("SineLevel:");
-          Serial.print(sineLevel);
-          Serial.print(" SawLevel:");
-          Serial.print(sawLevel);
-          Serial.print("Square:");
-          Serial.print(squareLevel);
-          Serial.print(" Triangle:");
-          Serial.print(triangleLevel);                    
+          Serial.print("Attack:");
+          Serial.print(attackVal);
+          Serial.print(" Decay:");
+          Serial.print(decayVal);
+          Serial.print(" Sustain:");
+          Serial.print(sustainVal);
+          Serial.print(" Release:");
+          Serial.print(releaseVal);                    
         }
       last_time = millis();
     }

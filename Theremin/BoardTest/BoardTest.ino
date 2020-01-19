@@ -20,11 +20,11 @@ void setup(){
   Serial.begin (9600);
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-  //pinMode(LDR, INPUT);
-  //pinMode(pot1, INPUT);
-  //pinMode(pot2, INPUT);
-  //pinMode(pot3, INPUT);
-  //pinMode(pot4, INPUT);
+  pinMode(LDR, INPUT);
+  pinMode(pot1, INPUT);
+  pinMode(pot2, INPUT);
+  pinMode(pot3, INPUT);
+  pinMode(pot4, INPUT);
 }
 
 void sensorReading()
@@ -52,11 +52,8 @@ void loop(){
     Serial.print("  LDR: ");
     Serial.print(analogRead(LDR));
     Serial.print("  HC-SR04:");
-    Serial.print(distance);
     Serial.print("\n");
-
+    delay(200);
 
 }
         
-
-
