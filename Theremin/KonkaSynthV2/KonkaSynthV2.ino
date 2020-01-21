@@ -76,6 +76,8 @@ float sineLevel;
 float sawLevel;
 float squareLevel;
 float triangleLevel;
+int midiChannel;
+int lastNote;
 
 enum waveforms
   {
@@ -123,6 +125,7 @@ void setup()
 
     isPrintEnabled = false;
     deviceMode = 1;
+    midiChannel = 1;
 
     //Init Envelope settings
     setEnvelopeValues(0, 0.5, 1.5, 15, 0.667, 30);
@@ -176,14 +179,27 @@ long sensorReading()
 int keyMap()
   {
     sensorVal = sensorReading();
-    if (sensorVal >50)  // ignore if distance is more than 50cm
+     // Turn off the previous notes
+    if (sensorVal > 50)  // ignore if distance is more than 50cm
       {
         //Serial.println("\n Distance Sensor: ignoring\n");
         key = 0;
+        if(lastNote != 0 && key == 0)
+        {
+          usbMIDI.sendNoteOff(lastNote, 127, midiChannel);
+        }        
+        lastNote = 0;
+        return key;
       }
-    else{
-            key = 1.78*sensorVal;
-          }
+          
+    key = 1.78*sensorVal + 35;
+    if (lastNote != key)
+    {
+      usbMIDI.sendNoteOff(lastNote, 127, midiChannel);
+      usbMIDI.sendNoteOn(key, 99, midiChannel);
+      lastNote = key;
+    }
+    
     return key;
   }
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Translating sensor reading to frequency>>>>>>>>>>>>>>>>>>>>>>
@@ -523,7 +539,7 @@ void loop()
         }
       last_time = millis();
     }
-    delay(10);
+    delay(50);
   }
  
 
