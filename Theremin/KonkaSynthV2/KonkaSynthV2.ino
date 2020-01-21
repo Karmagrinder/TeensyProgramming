@@ -7,13 +7,24 @@
 
 //Pins
 #define trigPin 0 // For UltrasonicSensor HC-S04
-#define echoPin 1 // For UltrasonicSensor HC-S04 
+#define echoPin 1 // For UltrasonicSensor HC-S04
+#define switch1 2
+#define switch2 3
+#define switch3 4
+#define switch4 5 
 #define photoResistorPin 20 
 #define led 13 
+
 #define envelopePotPin 21
 #define volumePin 15
 #define waveformPotPin 17
 #define FXPotPin 16
+
+#define pot1 15
+#define pot2 16
+#define pot3 17
+#define pot4 21
+
 
 
 // GUItool: begin automatically generated code
@@ -48,6 +59,25 @@ int currentWaveForm;
 int key;
 float FXVal;
 bool isPrintEnabled;
+int deviceMode;
+bool isPot1Changed;
+bool isPot2Changed;
+bool isPot3Changed;
+bool isPot4Changed;
+int pot1LastVal;
+int pot2LastVal;
+int pot3LastVal;
+int pot4LastVal;
+float attackVal;
+float decayVal;
+float sustainVal;
+float releaseVal;
+float sineLevel;
+float sawLevel;
+float squareLevel;
+float triangleLevel;
+int midiChannel;
+int lastNote;
 
 enum waveforms
   {
@@ -64,6 +94,12 @@ void setup()
     pinMode(trigPin, OUTPUT);
     pinMode(echoPin, INPUT);
     pinMode(led, OUTPUT);
+
+    pinMode(switch1, INPUT);
+    pinMode(switch2, INPUT);
+    pinMode(switch3, INPUT);
+    pinMode(switch4, INPUT);
+
     pinMode(volumePin, INPUT);
     pinMode(photoResistorPin, INPUT);
     pinMode(envelopePotPin, INPUT);
@@ -88,7 +124,45 @@ void setup()
     sgtl5000_1.volume(0.5);
 
     isPrintEnabled = false;
+    deviceMode = 1;
+    midiChannel = 1;
+
+    //Init Envelope settings
+    setEnvelopeValues(0, 0.5, 1.5, 15, 0.667, 30);
   }
+//>>>>>>>>>>>>>> Detect Mode <<<<<<<<<<<<<<<<<<
+void setDeviceMode()
+  {
+      int switch1Val = 0;
+      int switch2Val = 0;
+      int switch3Val = 0;
+      int switch4Val = 0;
+
+      switch1Val = digitalRead(switch1);
+      switch2Val = digitalRead(switch2);
+      switch3Val = digitalRead(switch3);
+      switch4Val = digitalRead(switch4);
+
+      if (switch1Val == HIGH)
+      {
+        deviceMode = 1;
+      }
+      else if (switch2Val == HIGH)
+      {
+        deviceMode = 2;
+      }
+      else if (switch3Val == HIGH)
+      {
+        deviceMode = 3;
+      }
+      else if (switch4Val == HIGH)
+      {
+        deviceMode  = 4;
+      }     
+  }
+
+
+
 //>>>>>>>>>>>>>> Reading the ultra sonic sensor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 long sensorReading()
   {
@@ -98,21 +172,34 @@ long sensorReading()
     delayMicroseconds(10); // Added this line
     digitalWrite(trigPin, LOW);
     duration = pulseIn(echoPin, HIGH);
-    distance = duration/58.2;
+    distance = (float)duration/58.2;
     return distance;
   }
 //>>>>>>>>>>>>>>>>>>>>> Key Mapping <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 int keyMap()
   {
     sensorVal = sensorReading();
-    if (sensorVal >50)  // ignore if distance is more than 50cm
+     // Turn off the previous notes
+    if (sensorVal > 50)  // ignore if distance is more than 50cm
       {
         //Serial.println("\n Distance Sensor: ignoring\n");
         key = 0;
+        if(lastNote != 0 && key == 0)
+        {
+          usbMIDI.sendNoteOff(lastNote, 127, midiChannel);
+        }        
+        lastNote = 0;
+        return key;
       }
-    else{
-            key = 1.78*sensorVal;
-          }
+          
+    key = 1.78*sensorVal + 35;
+    if (lastNote != key)
+    {
+      usbMIDI.sendNoteOff(lastNote, 127, midiChannel);
+      usbMIDI.sendNoteOn(key, 99, midiChannel);
+      lastNote = key;
+    }
+    
     return key;
   }
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Translating sensor reading to frequency>>>>>>>>>>>>>>>>>>>>>>
@@ -126,7 +213,7 @@ float frequencyCalculator()
     {
       // formula taken from : http://en.wikipedia.org/wiki/Piano_key_frequencies
       double x = key;
-      double y= pow(2, ((x-49)/12)); // pow() takes only double as variables
+      double y= pow(2, ((float)(x-49)/12)); // pow() takes only double as variables
       //noteFrequency = (2^((key-49)/12))*440;
       noteFrequency = y*440;
     }
@@ -134,7 +221,7 @@ float frequencyCalculator()
   }
 // >>>>>>>>>>>>>>>>>>>>>> Envelope altering >>>>>>>>>>>>>>>>>>>>>>>>>
 
-void setEnvelopeValues(float delay, float attack, float hold, float decay, float sustain, float release)
+void setEnvelopeValues(float delay, float hold, float attack,  float decay, float sustain, float release)
   {
       envelope1.delay(delay);
       envelope1.attack(attack);
@@ -144,101 +231,70 @@ void setEnvelopeValues(float delay, float attack, float hold, float decay, float
       envelope1.release(release);
   }
 
-void alterEnvelope()
-  { 
-      int potVal;
-      potVal = analogRead(envelopePotPin);
-      envelopeSelect = potVal/256;
-    
-    switch (envelopeSelect)
-      {         
-            case 0:
-                  //envelope1.state = 0;
-                setEnvelopeValues(0, 1.5, 0.5, 15, 0.667, 30);
-                break;
-            case 1:
-                setEnvelopeValues(20, 9.2, 2.1, 31.4, 0.6, 84.6);
-                break;
-            case 2:
-                setEnvelopeValues(30, 9.2, 2.1, 31.4, 0.6, 84.6);
-                break;
-              case 3:
-                setEnvelopeValues(50, 50, 1, 50, 1, 250);
-                break;        
-        }            
-  }
 // >>>>>>>>>>>>>>>>>>>>>> Amplitude maping >>>>>>>>>>>>>>>>>>>>>>>>>
 float amplitudeMapping()
     {  
        double z;     
        z = analogRead(photoResistorPin);
-       amplitudeVal = z/300;           
+       amplitudeVal = (float)z/300;           
       return amplitudeVal;
     }
   
 //>>>>>>>>>>>>>>>>>>>>>>> WaveForm handling >>>>>>>>>>>>>>>>>>>>>>>>>>
-
-void setWaveFormAmplitube(int selectedWaveForm)
+void setMixerLevelsToNull()
   {
-
-    float level = 1.0;
-
-    // reset mixer1
-    mixer1.gain(0, 0);
-    mixer1.gain(1, 0);
-    mixer1.gain(2, 0);
-    mixer1.gain(3, 0);
-
-    // set waveform active on mixer
-    mixer1.gain(selectedWaveForm, level);
-
-    // reset amplitudes
-    sine1.amplitude(0);
-    saw1.amplitude(0);
-    square1.amplitude(0);
-    triangle1.amplitude(0);
-
-    // reset frequency
-    sine1.frequency(0);
-    saw1.frequency(0);
-    square1.frequency(0);
-    triangle1.frequency(0);
-
-
-    switch (selectedWaveForm)
-    {
-      case 0:
-            sine1.amplitude(noteAmplitude);
-            sine1.frequency(noteFrequency);
-          break;
-
-      case 1:
-            saw1.amplitude(noteAmplitude);
-            saw1.frequency(noteFrequency);
-          break;
-
-      case 2:
-            square1.amplitude(noteAmplitude);
-            square1.frequency(noteFrequency);
-
-          break;
-
-      case 3:
-            triangle1.amplitude(noteAmplitude);
-            triangle1.frequency(noteFrequency);
-          break;
-      
-      default:      
-        break;
+      mixer1.gain(0, 0);
+      mixer1.gain(1, 0);
+      mixer1.gain(2, 0);
+      mixer1.gain(3, 0);
     }
+
+ void setAmplitudesToNull()
+ {
+    // reset amplitudes
+      sine1.amplitude(0);
+      saw1.amplitude(0);
+      square1.amplitude(0);
+      triangle1.amplitude(0);
   }
 
-int waveFormHandling()
+  void setFrequenciesToNull()
+  {
+      // reset frequency
+      sine1.frequency(0);
+      saw1.frequency(0);
+      square1.frequency(0);
+      triangle1.frequency(0);
+    }
+    
+  void setNoteAndFrequencies()
+  {
+      sine1.amplitude(noteAmplitude);
+      sine1.frequency(noteFrequency);
+      saw1.amplitude(noteAmplitude);
+      saw1.frequency(noteFrequency);
+      square1.amplitude(noteAmplitude);
+      square1.frequency(noteFrequency);
+      triangle1.amplitude(noteAmplitude);
+      triangle1.frequency(noteFrequency); 
+    }
+
+void setWaveFormAmplitude(int selectedWaveForm)
+  {
+    setMixerLevelsToNull();
+    setAmplitudesToNull();
+    setFrequenciesToNull();
+    setNoteAndFrequencies();
+    float level = 1.0;
+    mixer1.gain(selectedWaveForm, level);
+  }
+
+void waveFormHandling()
   {
     int potVal1=analogRead(waveformPotPin);
     int waveFormSelect = potVal1/256;
-    setWaveFormAmplitube(waveFormSelect);
-    return waveFormSelect;
+    setWaveFormAmplitude(waveFormSelect);
+    currentWaveForm = waveFormSelect;
   }
 //>>>>>>>>>>>>>>>>>>>>Delay<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void delayHandler()
@@ -264,70 +320,227 @@ void soundGen()
     keyMap();
     noteFrequency = frequencyCalculator();
     noteAmplitude = amplitudeMapping();
-    //noteAmplitude = 0.5;
-    alterEnvelope();
+    //noteAmplitude = 0.5;    
     if (noteFrequency > 27.4)
     {     
-          currentWaveForm = waveFormHandling();
-          delayHandler();
-          envelope1.noteOn();
-          delay(20);
-          envelope1.noteOff();
-          digitalWrite(led,HIGH);
-       }
+      envelope1.noteOn();
+      delay(20);
+      envelope1.noteOff();
+      digitalWrite(led,HIGH);
+    }
        
-     if(noteFrequency == 0)
-      {
-        envelope1.noteOff();
-        digitalWrite(led,LOW);
-      }
+    if(noteFrequency == 0)
+    {
+      envelope1.noteOff();
+      digitalWrite(led,LOW);
+    }
   }
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Volume Control <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void volumeControl()
-    {   vol = analogRead(volumePin);
-        vol = vol/1048;
-        sgtl5000_1.volume(vol);
-        
-     }
+    {   
+      vol = analogRead(volumePin);
+      vol = (float)vol/1024;
+      sgtl5000_1.volume(vol);
+    }
+
+// DEVICE MODE 
+void handleDeviceMode()
+  {
+    switch (deviceMode)
+    {
+      case 1:
+        volumeControl();
+        waveFormHandling();
+        setEnvelopeValues(0, 0.5, 1.5, 15, 0.667, 30);
+        delayHandler();
+        break;
+      
+      case 2:
+        mapPotsToEnvelope();
+        break;
+      
+      case 3:
+        mapPotsToWaveformMixer();
+        break;
+      
+      default:
+        break;
+    }
+  }
+
+// CHECK POT STATE CHANGE
+void isPotStateChanged()
+  {
+    if (pot1LastVal != analogRead(pot1))
+    {
+      isPot1Changed = true;
+    }
+    else
+    {
+      isPot1Changed = false;
+    }    
+     
+    if (pot2LastVal != analogRead(pot2))
+    {
+      isPot2Changed = true;
+    }
+    else
+    {
+      isPot2Changed = false;
+    }
+
+    if (pot3LastVal != analogRead(pot3))
+    {
+      isPot3Changed = true;
+    }
+    else
+    {
+      isPot3Changed = false;
+    }
+
+    if (pot4LastVal != analogRead(pot4))
+    {
+      isPot4Changed = true;
+    }
+    else
+    {
+      isPot4Changed = false;
+    }
+  }
+
+  // SAVE POT STATEs
+void savePotStates()
+  {
+    pot1LastVal = analogRead(pot1);
+    pot2LastVal = analogRead(pot2);
+    pot3LastVal = analogRead(pot3);
+    pot4LastVal = analogRead(pot4);
+  }
+
+// Envelope Mode
+void mapPotsToEnvelope()
+  {
+    
+    if(isPot1Changed)
+    {
+      attackVal = (float)analogRead(pot1)/100;
+    }
+
+    if(isPot2Changed)
+    {
+      decayVal = (float)analogRead(pot2)/50;
+    }
+
+    if(isPot3Changed)
+    {
+      sustainVal = (float)analogRead(pot3)/50;
+    }
+
+    if(isPot4Changed)
+    {
+      releaseVal = (float)analogRead(pot4)/50;
+    }
+    
+    float defaultDelayVal = 1;
+    float defaultHoldVal = 1;
+
+    setEnvelopeValues(defaultDelayVal, defaultHoldVal, attackVal, decayVal, sustainVal, releaseVal);    
+  }
+
+  // WaveForm Mode
+void mapPotsToWaveformMixer()
+  {
+    if(isPot1Changed)
+    {
+      sineLevel = (float)analogRead(pot1)/1024;
+    }
+
+    if(isPot2Changed)
+    {
+      sawLevel = (float)analogRead(pot2)/1024;
+    }
+
+    if(isPot3Changed)
+    {
+      squareLevel = (float)analogRead(pot3)/1024;
+    }
+
+    if(isPot4Changed)
+    {
+      triangleLevel = (float)analogRead(pot4)/1024;
+    }
+
+    setAmplitudesToNull();
+    setFrequenciesToNull();
+    setNoteAndFrequencies();   
+    
+    mixer1.gain(0, sineLevel);
+    mixer1.gain(1, sawLevel);
+    mixer1.gain(2, squareLevel);
+    mixer1.gain(3, triangleLevel);    
+            
+  }
+
+
+
 // >>>>>>>>>>>>>>>>>>>>>>>>>>> Main Loop <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 unsigned long last_time = millis();
 
 void loop()
+  {
+    isPotStateChanged();
+    setDeviceMode();
+    handleDeviceMode(); 
+    soundGen();
+    savePotStates();
+    if (isPrintEnabled)
     {
-      volumeControl(); 
-      soundGen();
-      if (isPrintEnabled)
-      {
-        if(millis() - last_time >= 500) {
-        if(key==0)
-          {
-            Serial.println("\nNot active \n");
-            
-          }
-        
-        else 
-          {        
-            Serial.print("\nWaveForm:");
-            Serial.print(currentWaveForm);
-            Serial.print("  Key: ");
-            Serial.print(key); 
-            Serial.print("  Envelope:");
-            Serial.print(envelopeSelect);
-            Serial.print("  amplitudeVal: ");
-            Serial.print(amplitudeVal);
-            Serial.print("  Frequency: ");
-            Serial.print(noteFrequency);
-            Serial.print("  Current Volume:");
-            Serial.print(noteFrequency);
-            Serial.print("  Delay:");
-            Serial.print(FXVal);
-            Serial.print("\n");
-            
-          }
-        last_time = millis();
-      }
-      delay(5);
+      if(millis() - last_time >= 500) {
+      if(key==0)
+        {
+          Serial.println("\nNot active \n");
+          
+        }
+      
+      else 
+        {        
+          // Serial.print("\nWaveForm:");
+          // Serial.print(currentWaveForm);
+          // Serial.print("  Key: ");
+          // Serial.print(key); 
+          // Serial.print("  Envelope:");
+          // Serial.print(envelopeSelect);
+          // Serial.print("  amplitudeVal: ");
+          // Serial.print(amplitudeVal);
+          // Serial.print("  Frequency: ");
+          // Serial.print(noteFrequency);
+          // Serial.print("  Current Volume:");
+          // Serial.print(noteFrequency);
+          // Serial.print("  Delay:");
+          // Serial.print(FXVal);
+           Serial.print("\n");
+           Serial.print("SineLevel:");
+           Serial.print(sineLevel);
+           Serial.print(" SawLevel:");
+           Serial.print(sawLevel);
+           Serial.print("Square:");
+           Serial.print(squareLevel);
+           Serial.print(" Triangle:");
+           Serial.print(triangleLevel);
+          Serial.print("\n");
+          Serial.print("Attack:");
+          Serial.print(attackVal);
+          Serial.print(" Decay:");
+          Serial.print(decayVal);
+          Serial.print(" Sustain:");
+          Serial.print(sustainVal);
+          Serial.print(" Release:");
+          Serial.print(releaseVal);                    
+        }
+      last_time = millis();
     }
+    delay(50);
+  }
  
 
 
