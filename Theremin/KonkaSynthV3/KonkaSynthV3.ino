@@ -114,7 +114,6 @@ void setup()
     display.clearDisplay();
     display.display();
     delay(2000);
-    display.cp437(true);
     setTextOnOled(screen_line0, 0);
     delay(2000);
     
