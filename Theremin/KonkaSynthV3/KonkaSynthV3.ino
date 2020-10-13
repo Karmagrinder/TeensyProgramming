@@ -196,10 +196,11 @@ void setDeviceMode()
 //>>>>>>>>>>>>>> Reading the ultra sonic sensor<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 long sensorReading()
   {
-    digitalWrite(trigPin, LOW);  // Added this line
-    delayMicroseconds(2); // Added this line
+    delay(2);
+    digitalWrite(trigPin, LOW);  
+    delayMicroseconds(2); 
     digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10); // Added this line
+    delayMicroseconds(10); 
     digitalWrite(trigPin, LOW);
     duration = pulseIn(echoPin, HIGH);
     distance = (float)duration/58.2;
@@ -210,7 +211,7 @@ int keyMap()
   {
     sensorVal = sensorReading();
      // Turn off the previous notes
-    if (sensorVal > 67)  // ignore if distance is more than 67cm
+    if (sensorVal > 50)  // ignore if distance is more than 67cm
       {
         //Serial.println("\n Distance Sensor: ignoring\n");
         key = 0;
