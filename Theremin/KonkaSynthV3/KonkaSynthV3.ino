@@ -42,7 +42,8 @@ AudioSynthWaveform       square1;      //xy=66,183
 AudioSynthWaveform       triangle1;      //xy=69,231
 AudioMixer4              mixer1;         //xy=224,128
 AudioEffectEnvelope      envelope1;      //xy=269,293
-AudioEffectDelay         delay1;
+//AudioEffectDelay         delay1;
+AudioEffectFreeverb      freeverb1;
 AudioOutputI2S           i2s1;           //xy=345,389
 AudioControlSGTL5000 sgtl5000_1;
 AudioConnection          patchCord1(sine1, 0, mixer1, 0);
@@ -50,10 +51,12 @@ AudioConnection          patchCord2(saw1, 0, mixer1, 1);
 AudioConnection          patchCord3(square1, 0, mixer1, 2);
 AudioConnection          patchCord4(triangle1, 0, mixer1, 3);
 AudioConnection          patchCord5(mixer1, envelope1);
-AudioConnection          patchCord6(envelope1, delay1);
-AudioConnection          patchCord7(delay1, 0, i2s1, 0);
-AudioConnection          patchCord8(delay1, 0, i2s1, 1); //Delay is mono to save processing
+AudioConnection          patchCord6(envelope1, freeverb1);
+AudioConnection          patchCord7(freeverb1, 0, i2s1, 0);
+AudioConnection          patchCord8(freeverb1, 0, i2s1, 1); //Delay is mono to save processing
 // GUItool: end automatically generated code
+
+
 
 float noteFrequency;
 float noteAmplitude;
@@ -66,7 +69,7 @@ int envelopeSelect;
 int currentWaveForm;
 int key;
 float FXVal;
-bool isPrintEnabled;
+bool isPrintEnabled = false;
 int deviceMode;
 bool isPot1Changed;
 bool isPot2Changed;
@@ -86,6 +89,7 @@ float squareLevel;
 float triangleLevel;
 int midiChannel;
 int lastNote;
+float FXVal1;
 
 enum waveforms
   {
@@ -138,19 +142,18 @@ void setup()
     square1.begin(0, noteFrequency, WAVEFORM_SQUARE);
     triangle1.begin(0, noteFrequency, WAVEFORM_TRIANGLE);
     //disabling delay on unused channels
-    delay1.disable(0);
-    delay1.disable(1); // delay is off on restart. 
-    delay1.disable(2);
-    delay1.disable(3);
-    delay1.disable(4);
-    delay1.disable(5);
-    delay1.disable(6);
-    delay1.disable(7);  
-    AudioMemory(30);
+//    delay1.disable(0);
+//    delay1.disable(1); // delay is off on restart. 
+//    delay1.disable(2);
+//    delay1.disable(3);
+//    delay1.disable(4);
+//    delay1.disable(5);
+//    delay1.disable(6);
+//    delay1.disable(7);  
+    AudioMemory(70);
     sgtl5000_1.enable();
     sgtl5000_1.volume(0.5);
 
-    isPrintEnabled = false;
     deviceMode = 1;
     midiChannel = 1;
 
@@ -312,7 +315,7 @@ void setWaveFormAmplitude(int selectedWaveForm)
     setAmplitudesToNull();
     setFrequenciesToNull();
     setNoteAndFrequencies();
-    float level = 1.0;
+    float level = 0.5;
     mixer1.gain(selectedWaveForm, level);
   }
 
@@ -326,32 +329,42 @@ void waveFormHandling()
 //>>>>>>>>>>>>>>>>>>>>Delay<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void delayHandler()
   {
-    int potVal2 = analogRead(FXPotPin);
-        FXVal = potVal2*0.28;  // If the FX value goes over 300/ or ~290 weird things start to happen, so let's keep it low.
-        delay(20);
-        if(FXVal>1)
-        {  
-          
-          if(FXVal>140)
-            {
-              FXVal = 140; // Restricting the delay to some sane value, to prevent crash.
-            }
-          delay1.delay(0, FXVal);
-        
-        }
+//    int potVal2 = analogRead(FXPotPin);
+//        FXVal = potVal2*0.28;  // If the FX value goes over 300/ or ~290 weird things start to happen, so let's keep it low.
+//        //delay(20);
+//        if(FXVal>1)
+//        {  
+//          
+//          if(FXVal>140)
+//            {
+//              FXVal = 140; // Restricting the delay to some sane value, to prevent crash.
+//            }
+//          delay1.delay(0, FXVal);
+//        
+//        }
   }
+
+void reverbHandler()
+{
+      FXVal =  analogRead(FXPotPin)/1023.0;
+      FXVal1 = analogRead(pot4)/1023.0;
+      
+      freeverb1.roomsize(FXVal);
+      freeverb1.damping(FXVal1);
+  
+}
  
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> generating the sound<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 void soundGen()
   {
     keyMap();
     noteFrequency = frequencyCalculator();
-    noteAmplitude = amplitudeMapping();
-    //noteAmplitude = 0.5;    
+    //noteAmplitude = amplitudeMapping();
+    noteAmplitude = 0.5;    
     if (noteFrequency > 27.4)
     {     
       envelope1.noteOn();
-      delay(20);
+      delay(2);
       envelope1.noteOff();
       digitalWrite(led,HIGH);
     }
@@ -366,7 +379,7 @@ void soundGen()
 void volumeControl()
     {   
       vol = analogRead(volumePin);
-      vol = (float)vol/1024;
+      vol = (float)vol/1023.0;
       sgtl5000_1.volume(vol);
     }
 
@@ -379,8 +392,7 @@ void handleDeviceMode()
         volumeControl();
         waveFormHandling();
         setEnvelopeValues(0, 0.5, 1.5, 15, 0.667, 30);
-        delayHandler();
-        
+        reverbHandler();
         
         break;
       
@@ -523,7 +535,7 @@ void mapPotsToWaveformMixer()
 // MIDI controller mode
 void midiControllerMode()
   {
-       
+       isPrintEnabled = !isPrintEnabled;
    }
 
    
