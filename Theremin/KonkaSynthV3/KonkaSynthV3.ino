@@ -364,7 +364,7 @@ void soundGen()
     if (noteFrequency > 27.4)
     {     
       envelope1.noteOn();
-      delay(2);
+      delay(1);
       envelope1.noteOff();
       digitalWrite(led,HIGH);
     }
